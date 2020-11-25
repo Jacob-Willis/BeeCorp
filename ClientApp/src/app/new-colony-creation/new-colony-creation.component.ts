@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Colony } from '../colony';
+import { Router } from '@angular/router';
 import { Apollo } from "apollo-angular";
 import gql from "graphql-tag";
 
@@ -10,7 +10,7 @@ import gql from "graphql-tag";
 })
 export class NewColonyCreationComponent implements OnInit {
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -46,6 +46,7 @@ export class NewColonyCreationComponent implements OnInit {
       variables: { _name: this.colonyName, _bee_count: this.beeCount, _hive_count: this.hiveCount }
     }).subscribe((data: any) => {
       this.loading = false;
+      this.router.navigate(['/homepage']);
     }, (error) => {
       console.log("There was an error", error);
     });
