@@ -1,0 +1,15 @@
+<p>Create new colony!</p>
+
+<div>
+  <label>Colony name:</label>
+  <input [(ngModel)]="colonyName" placeholder="Enter Colony Name" type="text" />
+  <br />
+  <label>Initial bee count:</label>
+  <input [(ngModel)]="beeCount" placeholder="Enter Bee Count" type="number" />
+  <br />
+  <label>Initial hive count:</label>
+  <input [(ngModel)]="hiveCount" placeholder="Enter Hive Count" type="number" />
+  <br />
+  <button (click)="saveNewColony()">Save</button>
+</div>
+

@@ -1,0 +1,33 @@
+
+<div *ngIf="loading; else elseBlock">
+  <p>Loading. . .</p>
+</div>
+
+<ng-template #elseBlock>
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Bee Count</th>
+          <th scope="col">Hive Count</th>
+          <th scope="col">Collected Amount</th>
+          <th scope="col">Latest Collection Date</th>
+          <th scope="col">Collection Count</th>
+          <th scope="col">Date Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let colony of colonyList">
+          <th scope="row">{{ colony.name }}</th>
+          <td>{{ colony.bee_count }}</td>
+          <td>{{ colony.hive_count }}</td>
+          <td>{{ getCollectedAmount(colony) }}</td>
+          <td>{{ getLastCollectionDate(colony) }}</td>
+          <td>{{ getCollectionCount(colony) }}</td>
+          <td>{{ colony.created_at | date:'medium' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template>
