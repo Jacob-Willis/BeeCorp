@@ -23,18 +23,33 @@ export class HomepageComponent implements OnInit {
   getCollectedAmount(colony: Colony) {
     if (colony.collectionInfo.length == 0) {
       return 0;
+    } else {
+      let amount = 0;
+
+      for (let i = 0; i < colony.collectionInfo.length; i++) {
+        amount += colony.collectionInfo[i].collection_amount;
+      }
+      return amount;
     }
   }
 
   getLastCollectionDate(colony: Colony) {
     if (colony.collectionInfo.length == 0) {
       return 0;
+    } else {
+      return colony.collectionInfo[colony.collectionInfo.length - 1].collection_date;
     }
   }
 
   getCollectionCount(colony: Colony) {
     if (colony.collectionInfo.length == 0) {
       return 0;
+    } else {
+      let i = 0;
+      for (let collection in colony.collectionInfo) {
+        i++;
+      }
+      return i;
     }
   }
 

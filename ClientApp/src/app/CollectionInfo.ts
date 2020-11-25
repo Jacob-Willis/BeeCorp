@@ -1,4 +1,4 @@
 export class CollectionInfo {
-  collectionDate = new Date();
-  collectionAmount = 0;
+  collection_date = new Date();
+  collection_amount = 0;
 }
