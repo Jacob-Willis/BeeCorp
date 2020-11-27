@@ -15,17 +15,25 @@
           <th scope="col">Latest Collection Date</th>
           <th scope="col">Collection Count</th>
           <th scope="col">Date Created</th>
+          <th scope="col">Next Collection Date</th>
+          <th scope="col">Colony Contains</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let colony of colonyList">
           <th scope="row">{{ colony.name }}</th>
-          <td>{{ colony.bee_count }}</td>
-          <td>{{ colony.hive_count }}</td>
-          <td>{{ getCollectedAmount(colony) }}</td>
+          <td><input (change)="updateBeeCount(colony, $event.target.valueAsNumber)" [ngModel]="colony.bee_count" type="number" /></td>
+          <td><input (change)="updateHiveCount(colony, $event.target.valueAsNumber)" [ngModel]="colony.hive_count" type="number" /></td>
+          <td>{{ getCollectedAmount(colony) }} grams</td>
           <td>{{ getLastCollectionDate(colony) }}</td>
           <td>{{ getCollectionCount(colony) }}</td>
           <td>{{ colony.created_at | date:'medium' }}</td>
+          <td>{{ calculateNextCollectionDate(colony) | date }}</td>
+          <td [ngClass]="isOverProduced(colony.id) ? 'over-produced' : 'not-over-produced'">{{ overProduction[colony.id] }} grams</td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="collect(colony)">Collect Honey</button>
+          </td>
         </tr>
       </tbody>
     </table>

@@ -23,6 +23,22 @@ export class NewColonyCreationComponent implements OnInit {
   saveNewColony() {
     this.loading = true;
 
+    const GET_COLONIES = gql`
+     {
+        colony(order_by: { created_at: asc }) {
+          id
+          name
+          bee_count
+          hive_count
+          created_at
+          collectionInfo(order_by: { collection_date: asc }) {
+            collection_date
+            collection_amount
+          }
+        }
+      }
+    `;
+
     const ADD_NEWCOLONY = gql`
     mutation ($_name: String!, $_bee_count: numeric!, $_hive_count: numeric!) {
       insert_colony(objects: {
@@ -43,12 +59,16 @@ export class NewColonyCreationComponent implements OnInit {
 
     this.apollo.mutate({
       mutation: ADD_NEWCOLONY,
-      variables: { _name: this.colonyName, _bee_count: this.beeCount, _hive_count: this.hiveCount }
+      variables: { _name: this.colonyName, _bee_count: this.beeCount, _hive_count: this.hiveCount },
+      refetchQueries: [
+        { query: GET_COLONIES }
+      ]
     }).subscribe((data: any) => {
       this.loading = false;
-      this.router.navigate(['/homepage']);
     }, (error) => {
       console.log("There was an error", error);
+    }, () => {
+        this.router.navigate(['/homepage']);
     });
   }
 

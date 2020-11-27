@@ -22,7 +22,10 @@
     "@angular/platform-browser-dynamic": "11.0.2",
     "@angular/platform-server": "11.0.2",
     "@angular/router": "11.0.2",
+    "@apollo/client": "^3.0.0",
     "@nguniversal/module-map-ngfactory-loader": "8.1.1",
+    "@types/lodash": "^4.14.165",
+    "@types/underscore": "^1.10.24",
     "angular": "^1.8.2",
     "apollo-angular": "^2.1.0",
     "apollo-angular-link-http": "^1.11.0",
@@ -35,11 +38,12 @@
     "graphql": "^15.4.0",
     "graphql-tag": "^2.11.0",
     "jquery": "^3.5.1",
+    "lodash": "^4.17.20",
     "oidc-client": "^1.9.1",
     "popper.js": "^1.16.0",
     "rxjs": "^6.5.3",
-    "zone.js": "0.10.3",
-    "@apollo/client": "^3.0.0"
+    "underscore": "^1.12.0",
+    "zone.js": "0.10.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1100.2",
