@@ -97,15 +97,17 @@ export class HomepageComponent implements OnInit, OnDestroy {
   }
 
   calculateOverProduction(colony: Colony) {
-    let differentInTime = new Date().getTime();
+    const currentTime = new Date();
+    let collectedTime: Date;
     if (colony.collectionInfo.length > 0) {
-      differentInTime = differentInTime - new Date(colony.collectionInfo[colony.collectionInfo.length - 1].collection_date).getTime();
+      collectedTime = new Date(colony.collectionInfo[colony.collectionInfo.length - 8].collection_date);
     } else {
-      differentInTime = differentInTime - new Date(colony.created_at).getTime();
+      collectedTime = new Date(colony.created_at);
     }
 
-    const differentInDays = differentInTime / (1000 * 60 * 60 * 24);
-    let overProduction = (colony.bee_count / colony.hive_count) * differentInDays * 0.26;
+    const differenceInTime = Math.abs(currentTime.getDate() - collectedTime.getDate());
+    const diff = Math.ceil(differenceInTime / (1000 * 3600 * 24));
+    let overProduction = (colony.bee_count / colony.hive_count) * diff * 0.26;
 
     return overProduction;
   }
