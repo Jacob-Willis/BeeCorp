@@ -47,60 +47,61 @@ export class HomepageComponent implements OnInit, OnDestroy {
   collect(colony: Colony) {
     let honeyCollected = this.overProduction[colony.id];
     let collectionDate = new Date();
-    console.log(honeyCollected);
 
-    const GET_COLONIES = gql`
-     {
-        colony(order_by: { created_at: asc }) {
-          id
-          name
-          bee_count
-          hive_count
-          created_at
-          collectionInfo(order_by: { collection_date: asc }) {
-            collection_date
-            collection_amount
+    if (honeyCollected > 0) {
+      const GET_COLONIES = gql`
+        {
+          colony(order_by: { created_at: asc }) {
+            id
+            name
+            bee_count
+            hive_count
+            created_at
+            collectionInfo(order_by: { collection_date: asc }) {
+              collection_date
+              collection_amount
+            }
           }
         }
-      }
-    `;
+        `;
 
-    const ADD_COLLECTION = gql`
-    mutation ($_colonyId: Int!, $_collection_date: date!, $_collection_amount: numeric!) {
-      insert_collectionInfo(objects: {
-        colony_id: $_colonyId,
-        collection_date: $_collection_date,
-        collection_amount: $_collection_amount
-      }) {
-        affected_rows
-        returning {
-          id,
-          colony_id,
-          collection_date,
-          collection_amount
+      const ADD_COLLECTION = gql`
+        mutation ($_colonyId: Int!, $_collection_date: date!, $_collection_amount: numeric!) {
+          insert_collectionInfo(objects: {
+            colony_id: $_colonyId,
+            collection_date: $_collection_date,
+            collection_amount: $_collection_amount
+          }) {
+            affected_rows
+            returning {
+              id,
+              colony_id,
+              collection_date,
+              collection_amount
+            }
+          }
         }
-      }
-    }
-    `;
+        `;
 
-    this.apollo.mutate({
-      mutation: ADD_COLLECTION,
-      variables: { _colonyId: colony.id, _collection_date: collectionDate, _collection_amount: honeyCollected },
-      refetchQueries: [
-        { query: GET_COLONIES }
-      ]
-    }).subscribe((data: any) => {
-      console.log("UPLOADED");
-    }, (error) => {
-      console.log("There was an error", error);
-    });
+      this.apollo.mutate({
+        mutation: ADD_COLLECTION,
+        variables: { _colonyId: colony.id, _collection_date: collectionDate, _collection_amount: honeyCollected },
+        refetchQueries: [
+          { query: GET_COLONIES }
+        ]
+      }).subscribe((data: any) => {
+        console.log("UPLOADED");
+      }, (error) => {
+        console.log("There was an error", error);
+      });
+    }
   }
 
   calculateOverProduction(colony: Colony) {
     const currentTime = new Date();
     let collectedTime: Date;
     if (colony.collectionInfo.length > 0) {
-      collectedTime = new Date(colony.collectionInfo[colony.collectionInfo.length - 8].collection_date);
+      collectedTime = new Date(colony.collectionInfo[colony.collectionInfo.length - 1].collection_date);
     } else {
       collectedTime = new Date(colony.created_at);
     }

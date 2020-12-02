@@ -28,7 +28,7 @@ import { HomepageComponent } from './homepage/homepage.component';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-    { path: '', component: HomeComponent, pathMatch: 'full' },
+    { path: '', component: HomepageComponent, pathMatch: 'full' },
     { path: 'new-colony-creation', component: NewColonyCreationComponent },
     { path: 'homepage', component: HomepageComponent },
     { path: 'counter', component: CounterComponent },
